@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ФишингДетектор — Система защиты от интернет-мошенничества</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Geologica:wght@300;400;500;700;900&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!--  ШАПКА  -->
+<header class="header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-shield">
+        <svg viewBox="0 0 40 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M20 2L4 9v13c0 10.5 6.8 20.3 16 23.5C29.2 42.3 36 32.5 36 22V9L20 2z" fill="url(#shieldGrad)" stroke="none"/>
+          <path d="M14 23l4 4 8-9" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+          <defs>
+            <linearGradient id="shieldGrad" x1="4" y1="2" x2="36" y2="45" gradientUnits="userSpaceOnUse">
+              <stop stop-color="#E63946"/>
+              <stop offset="1" stop-color="#9B1D24"/>
+            </linearGradient>
+          </defs>
+        </svg>
+      </div>
+      <div class="logo-text">
+        <span class="logo-main">ФишингДетектор</span>
+        <span class="logo-sub">Система защиты · РФ</span>
+      </div>
+    </div>
+    <nav class="header-nav">
+      <a href="#url-tab" class="nav-link active" data-tab="url">Анализ URL</a>
+      <a href="#msg-tab" class="nav-link" data-tab="message">Анализ сообщения</a>
+      <a href="#full-tab" class="nav-link" data-tab="full">Полный анализ</a>
+      <a href="#about" class="nav-link">О системе</a>
+    </nav>
+    <div class="header-badge">
+      <span class="badge-dot"></span>
+      Система активна
+    </div>
+  </div>
+</header>
+
+<!--  HERO  -->
+<section class="hero">
+  <div class="hero-bg">
+    <div class="grid-overlay"></div>
+    <div class="scanline"></div>
+  </div>
+  <div class="hero-content">
+    <div class="hero-tag">Интеллектуальная защита · ИИ + Эвристика</div>
+    <h1 class="hero-title">
+      Распознай фишинг<br/>
+      <span class="hero-accent">до того, как станет поздно</span>
+    </h1>
+    <p class="hero-desc">
+      <strong>Курсовая работа:</strong> Применение искусственного интеллекта для обнаружения фишинговых атак.<br> 
+    <strong>Студент:</strong> Саадаллах М.З. | <strong>Группа:</strong> Б9124.10.03.01 (ОТЗИ)
+    </p>
+    <div class="hero-stats">
+      <div class="stat-item">
+        <span class="stat-num">97%</span>
+        <span class="stat-label">Точность</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">1 247</span>
+        <span class="stat-label">Проверено</span>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <span class="stat-num">389</span>
+        <span class="stat-label">Угроз выявлено</span>
+      </div>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="radar-container">
+      <div class="radar-ring r1"></div>
+      <div class="radar-ring r2"></div>
+      <div class="radar-ring r3"></div>
+      <div class="radar-sweep"></div>
+      <div class="radar-dot d1"></div>
+      <div class="radar-dot d2 danger"></div>
+      <div class="radar-dot d3"></div>
+      <div class="radar-dot d4 danger"></div>
+      <div class="radar-center">
+        <svg viewBox="0 0 24 24" fill="none"><path d="M12 2L4 5.5v7c0 5.25 3.4 10.15 8 11.75 4.6-1.6 8-6.5 8-11.75v-7L12 2z" fill="currentColor"/></svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  TABS + FORMS  -->
+<main class="main-content">
+  <div class="container">
+
+    <!-- Вкладки -->
+    <div class="tabs-bar">
+      <button class="tab-btn active" data-target="url">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M13.5 6.5l-7 7M6.5 9.5L9 7l-2.5-2.5L4 7a4.243 4.243 0 006 6l2.5-2.5L10 8l-2.5 2.5M11 10.5l2.5-2.5 2.5 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Анализ URL
+      </button>
+      <button class="tab-btn" data-target="message">
+        <svg viewBox="0 0 20 20" fill="none"><path d="M3 4h14a1 1 0 011 1v8a1 1 0 01-1 1H5l-3 3V5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Анализ сообщения
+      </button>
+      <button class="tab-btn" data-target="full">
+        <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="10" r="7" stroke="currentColor" stroke-width="1.5"/><path d="M10 7v3l2 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+        Полный анализ
+      </button>
+    </div>
+
+    <!--  URL Panel  -->
+    <div class="panel active" id="panel-url">
+      <div class="panel-header">
+        <h2>Проверка ссылки / URL</h2>
+        <p>Введите любую ссылку для немедленной проверки на признаки фишинга</p>
+      </div>
+      <form class="analysis-form" id="url-form">
+        <div class="input-group">
+          <label>Ссылка для проверки</label>
+          <div class="input-wrap">
+            <span class="input-icon">
+              <svg viewBox="0 0 20 20" fill="none"><path d="M13.5 6.5l-7 7M6.5 9.5L9 7l-2.5-2.5L4 7a4.243 4.243 0 006 6l2.5-2.5L10 8l-2.5 2.5M11 10.5l2.5-2.5 2.5 2.5-2.5 2.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </span>
+            <input type="text" id="url-input" class="text-input" placeholder="https://example.ru или gosuslugi-login.site" autocomplete="off" />
+            <button type="button" class="clear-btn" onclick="clearInput('url-input')">✕</button>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="quick-examples">
+            <span>Примеры:</span>
+            <button type="button" class="example-btn" onclick="setExample('url', 'https://gosuslugi-login.online/verify')">gosuslugi-login.online</button>
+            <button type="button" class="example-btn" onclick="setExample('url', 'http://sber-bank.tk/secure')">sber-bank.tk</button>
+            <button type="button" class="example-btn" onclick="setExample('url', 'https://gosuslugi.ru')">gosuslugi.ru ✓</button>
+          </div>
+          <button type="submit" class="submit-btn">
+            <span class="btn-text">Проверить URL</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!--  Message Panel  -->
+    <div class="panel" id="panel-message">
+      <div class="panel-header">
+        <h2>Анализ текста сообщения</h2>
+        <p>Проверьте подозрительное письмо, SMS или сообщение в мессенджере</p>
+      </div>
+      <form class="analysis-form" id="msg-form">
+        <div class="form-two-col">
+          <div class="input-group">
+            <label>Отправитель (необязательно)</label>
+            <div class="input-wrap">
+              <span class="input-icon">
+                <svg viewBox="0 0 20 20" fill="none"><circle cx="10" cy="7" r="3" stroke="currentColor" stroke-width="1.5"/><path d="M4 17c0-3.3 2.7-6 6-6s6 2.7 6 6" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+              </span>
+              <input type="text" id="sender-input" class="text-input" placeholder="ВКонтакте, Сбербанк, noreply@sber.ru" />
+            </div>
+          </div>
+          <div class="input-group">
+            <label>Канал получения</label>
+            <div class="input-wrap">
+              <select class="text-input select-input" id="channel-select">
+                <option value="">Выберите канал...</option>
+                <option value="email">📧 Email / Почта</option>
+                <option value="sms">💬 SMS</option>
+                <option value="vk">👥 ВКонтакте</option>
+                <option value="telegram">✈️ Telegram</option>
+                <option value="whatsapp">📱 WhatsApp</option>
+                <option value="other">🔗 Другое</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Текст сообщения</label>
+          <div class="textarea-wrap">
+            <textarea id="message-input" class="text-area" rows="6"
+              placeholder="Вставьте сюда подозрительное сообщение...
+
+Например: «Уважаемый клиент! Ваш аккаунт заблокирован. Срочно подтвердите личность по ссылке: gosuslugi-login.site»"></textarea>
+            <div class="char-counter"><span id="char-count">0</span> символов</div>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="quick-examples">
+            <span>Примеры:</span>
+            <button type="button" class="example-btn" onclick="loadMsgExample(1)">SMS о блокировке</button>
+            <button type="button" class="example-btn" onclick="loadMsgExample(2)">Выигрыш в лотерею</button>
+            <button type="button" class="example-btn" onclick="loadMsgExample(3)">Письмо от Банка</button>
+          </div>
+          <button type="submit" class="submit-btn">
+            <span class="btn-text">Анализировать</span>
+            <span class="btn-icon">→</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!--  Full Panel  -->
+    <div class="panel" id="panel-full">
+      <div class="panel-header">
+        <h2>Полный комплексный анализ</h2>
+        <p>Одновременная проверка URL и текста сообщения с перекрёстным анализом</p>
+      </div>
+      <form class="analysis-form" id="full-form">
+        <div class="input-group">
+          <label>URL / Ссылка из сообщения</label>
+          <div class="input-wrap">
+            <span class="input-icon">🔗</span>
+            <input type="text" id="full-url-input" class="text-input" placeholder="https://подозрительный-сайт.ru" />
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Имя отправителя</label>
+          <div class="input-wrap">
+            <span class="input-icon">👤</span>
+            <input type="text" id="full-sender-input" class="text-input" placeholder="Например: Сбербанк, ВКонтакте..." />
+          </div>
+        </div>
+        <div class="input-group">
+          <label>Текст сообщения</label>
+          <textarea id="full-msg-input" class="text-area" rows="5" placeholder="Полный текст подозрительного сообщения..."></textarea>
+        </div>
+        <div class="form-row">
+          <div></div>
+          <button type="submit" class="submit-btn primary-large">
+            <span class="btn-text">Запустить полный анализ</span>
+            <span class="btn-icon">🛡</span>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <!--  RESULTS  -->
+    <div class="results-section" id="results" style="display:none">
+      <div class="results-header">
+        <h2>Результаты анализа</h2>
+        <div class="results-meta">
+          <span id="report-id"></span>
+          <span id="report-time"></span>
+        </div>
+      </div>
+
+      <!-- Главная оценка -->
+      <div class="verdict-card" id="verdict-card">
+        <div class="verdict-score-wrap">
+          <div class="score-ring">
+            <svg viewBox="0 0 120 120" class="ring-svg">
+              <circle class="ring-bg" cx="60" cy="60" r="52" />
+              <circle class="ring-fill" id="score-ring-fill" cx="60" cy="60" r="52"
+                stroke-dasharray="327" stroke-dashoffset="327" />
+            </svg>
+            <div class="score-center">
+              <span class="score-number" id="score-number">0</span>
+              <span class="score-label">/ 100</span>
+            </div>
+          </div>
+        </div>
+        <div class="verdict-details">
+          <div class="verdict-badge" id="verdict-badge">—</div>
+          <div class="verdict-text" id="verdict-text">—</div>
+          <div class="verdict-recommend" id="verdict-recommend">—</div>
+        </div>
+      </div>
+
+      <!-- Вкладки результатов -->
+      <div class="result-tabs">
+        <button class="rtab active" data-rtab="checks">🔍 Проверки</button>
+        <button class="rtab" data-rtab="whois">🌐 WHOIS</button>
+        <button class="rtab" data-rtab="ai">🤖 ИИ-анализ</button>
+        <button class="rtab" data-rtab="findings">⚠️ Находки</button>
+      </div>
+
+      <div class="result-panels">
+        <!-- Проверки -->
+        <div class="rpanel active" id="rpanel-checks">
+          <div class="checks-grid" id="checks-grid"><!-- filled by JS --></div>
+        </div>
+
+        <!-- WHOIS -->
+        <div class="rpanel" id="rpanel-whois">
+          <div class="whois-table" id="whois-table"><!-- filled by JS --></div>
+        </div>
+
+        <!-- ИИ -->
+        <div class="rpanel" id="rpanel-ai">
+          <div class="ai-response" id="ai-response"><!-- filled by JS --></div>
+        </div>
+
+        <!-- Находки -->
+        <div class="rpanel" id="rpanel-findings">
+          <div class="findings-list" id="findings-list"><!-- filled by JS --></div>
+        </div>
+      </div>
+
+      <!-- Куда сообщить -->
+      <div class="report-section">
+        <h3>📢 Куда сообщить о мошенничестве?</h3>
+        <div class="report-grid">
+          <a href="https://www.cbr.ru/fintech/dr/" target="_blank" class="report-card">
+            <div class="report-icon">🏦</div>
+            <div class="report-name">Банк России</div>
+            <div class="report-desc">Финансовое мошенничество</div>
+          </a>
+          <a href="https://www.rkn.gov.ru/" target="_blank" class="report-card">
+            <div class="report-icon">📡</div>
+            <div class="report-name">Роскомнадзор</div>
+            <div class="report-desc">Незаконные сайты</div>
+          </a>
+          <a href="https://www.mvd.ru/" target="_blank" class="report-card">
+            <div class="report-icon">👮</div>
+            <div class="report-name">МВД России</div>
+            <div class="report-desc">Интернет-мошенничество</div>
+          </a>
+          <a href="https://stopfraud.ru/" target="_blank" class="report-card">
+            <div class="report-icon">🛡</div>
+            <div class="report-name">Стоп Мошенник</div>
+            <div class="report-desc">Общественная база</div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <!-- Loading -->
+    <div class="loading-overlay" id="loading" style="display:none">
+      <div class="loading-card">
+        <div class="loading-radar">
+          <div class="l-ring l1"></div>
+          <div class="l-ring l2"></div>
+          <div class="l-ring l3"></div>
+          <div class="l-sweep"></div>
+        </div>
+        <div class="loading-text">Анализируем...</div>
+        <div class="loading-steps" id="loading-steps">
+          <div class="lstep active" id="ls-1">⬤ Проверка домена и WHOIS</div>
+          <div class="lstep" id="ls-2">⬤ Анализ структуры URL</div>
+          <div class="lstep" id="ls-3">⬤ Сканирование на репутацию</div>
+          <div class="lstep" id="ls-4">⬤ ИИ-анализ угрозы</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /container -->
+</main>
+
+<!--  О СИСТЕМЕ  -->
+<section class="about-section" id="about">
+  <div class="container">
+    <div class="about-header">
+      <h2>О системе</h2>
+      <p>Курсовая работа по дисциплине «Информационная безопасность»</p>
+    </div>
+    <div class="about-grid">
+      <div class="about-card">
+        <div class="about-icon">🔬</div>
+        <h3>Эвристический анализ</h3>
+        <p>15+ правил проверки структуры URL, возраста домена, TLD, SSL-сертификатов и паттернов мошенников</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🤖</div>
+        <h3>Искусственный интеллект</h3>
+        <p>Интеграция с GigaChat AI для глубокого семантического анализа текста и выявления скрытых угроз</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🌐</div>
+        <h3>WHOIS-верификация</h3>
+        <p>Автоматическая проверка возраста домена, регистратора и страны через международные базы данных</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">⚡</div>
+        <h3>Алгоритм Левенштейна</h3>
+        <p>Обнаружение доменов-двойников через расстояние редактирования и IDN-спуфинга</p>
+      </div>
+      <div class="about-card">
+        <div class="about-icon">🇷🇺</div>
+        <h3>Российский контекст</h3>
+        <p>База верифицированных доменов российских банков, госорганов и крупных компаний</p>
+      </div>═══════════════════
+      <div class="about-card">
+        <div class="about-icon">📊</div>
+        <h3>Комплексная оценка</h3>
+        <p>Взвешенная система баллов риска с детализированным отчётом по каждому критерию</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!--  FOOTER  -->
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <div class="footer-logo">
+        <span>ФишингДетектор</span>
+        <span class="footer-version">v1.0 · 2026</span>
+      </div>
+      <div class="footer-info">
+        Применение искусственного интеллекта для обнаружения фишинговых атак · ДВФУ
+      </div>
+      <div class="footer-tech">
+        Python · Flask · GigaChat AI · WHOIS API
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

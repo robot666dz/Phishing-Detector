@@ -1,0 +1,23 @@
+# .gitignore — Файлы которые НЕ загружаются на GitHub
+
+# САМОЕ ВАЖНОЕ: секретные ключи
+.env
+*.env
+!.env.example
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+venv/
+env/
+.venv/
+
+# Логи
+*.log
+phishing_detector.log
+
+# IDE
+.vscode/
+.idea/
+*.swp
