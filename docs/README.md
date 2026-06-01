@@ -39,9 +39,7 @@ phishing-detector/
 │   ├── analyzer.py        # Ядро анализа фишинга
 │   └── requirements.txt   # Python зависимости
 │
-└── docs/
-└── README.md          # Документация
-
+└── README.md 
 ```
 
 ---
