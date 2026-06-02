@@ -1,5 +1,3 @@
-
-
 //  Конфигурация 
 const CONFIG = {
   API_BASE: 'http://localhost:5000/api',
@@ -210,7 +208,8 @@ function displayResults(data, type) {
     verdict = data.url_analysis.verdict;
     recommend = data.url_analysis.recommendation;
   } else {
-    score = data.risk_score || 0;
+    // Flat demo result (url demo mode or fallback)
+    score = data.risk_score ?? 0;
     level = data.risk_level || 'БЕЗОПАСНЫЙ';
     verdict = data.verdict || '—';
     recommend = data.recommendation || '—';
@@ -270,11 +269,13 @@ function normalizeData(data, type) {
   };
 
   if (type === 'url') {
+    // Support both flat demo result and backend url_analysis wrapper
+    const urlSrc = data.url_analysis || data;
     return {
-      checks: data.checks || {},
-      whois: data.whois || {},
-      ai_analysis: data.ai_analysis || {},
-      findings: data.findings || []
+      checks: urlSrc.checks || {},
+      whois: urlSrc.whois || {},
+      ai_analysis: urlSrc.ai_analysis || {},
+      findings: urlSrc.findings || []
     };
   }
   
@@ -358,13 +359,35 @@ function renderChecks(checks) {
 //  WHOIS 
 function renderWhois(whois) {
   const table = $('whois-table');
-  if (!whois || whois.status === 'error' || whois.status === 'info') {
+
+  // No data at all
+  if (!whois) {
     table.innerHTML = `<div style="padding:20px;color:var(--text2);font-size:14px;grid-column:1/-1">
-      ${whois?.message || 'Данные WHOIS недоступны для данного запроса'}
+      ℹ️ Данные WHOIS недоступны для данного запроса
     </div>`;
     return;
   }
 
+  // Info mode (e.g. message analysis)
+  if (whois.status === 'info') {
+    table.innerHTML = `<div style="padding:20px;color:var(--text2);font-size:14px;grid-column:1/-1">
+      ℹ️ ${whois.message || 'WHOIS недоступен для анализа сообщений'}
+    </div>`;
+    return;
+  }
+
+  // Error but show domain at least
+  if (whois.status === 'error') {
+    table.innerHTML = `
+      <div style="padding:16px 20px;grid-column:1/-1">
+        <div style="color:var(--yellow);font-size:13px;font-weight:600;margin-bottom:8px">⚠️ WHOIS недоступен</div>
+        <div style="color:var(--text2);font-size:13px">${whois.message || 'Не удалось получить данные WHOIS'}</div>
+        ${whois.domain ? `<div style="color:var(--text3);font-size:12px;margin-top:8px;font-family:var(--mono)">Домен: ${whois.domain}</div>` : ''}
+      </div>`;
+    return;
+  }
+
+  // Success — show full table
   const rows = [
     ['Домен', whois.domain || '—'],
     ['Дата регистрации', whois.creation_date || '—'],
