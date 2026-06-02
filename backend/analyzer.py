@@ -1,12 +1,10 @@
-
-
 import re
 import json
 import math
 import socket
 import urllib.parse
 import os
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Tuple, Optional
 import whois as whois_lib
 from ai_client import AIClient
@@ -620,6 +618,8 @@ class PhishingAnalyzer:
             if creation_date:
                 if isinstance(creation_date, str):
                     creation_date = datetime.strptime(creation_date[:10], '%Y-%m-%d')
+                if hasattr(creation_date, "tzinfo") and creation_date.tzinfo is not None:
+                    creation_date = creation_date.astimezone(timezone.utc).replace(tzinfo=None)
                 delta = datetime.now() - creation_date
                 age_days = delta.days
                 if age_days < 30:
