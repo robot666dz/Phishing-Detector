@@ -1,10 +1,9 @@
-`import whois
+import whois
 import dns.resolver
-from datetime import datetime
+from datetime import datetime, timezone
 from urllib.parse import urlparse
 
 def analyze_infrastructure(url: str) -> dict:
-    # Извлекаем чистый домен из URL
     parsed_url = urlparse(url)
     domain = parsed_url.netloc if parsed_url.netloc else parsed_url.path
     domain = domain.replace("www.", "")
@@ -21,14 +20,18 @@ def analyze_infrastructure(url: str) -> dict:
     try:
         w = whois.whois(domain)
         creation_date = w.creation_date
-        
+
         if isinstance(creation_date, list):
             creation_date = creation_date[0]
-            
+
         if creation_date:
-            age = (datetime.now() - creation_date).days
+            # Приводим оба datetime к одному типу (UTC без tzinfo)
+            now = datetime.now(timezone.utc)
+            if creation_date.tzinfo is None:
+                # naive → считаем что UTC
+                creation_date = creation_date.replace(tzinfo=timezone.utc)
+            age = (now - creation_date).days
             result["age_days"] = age
-            # Если домену меньше 6 месяцев (180 дней), это подозрительно
             if age < 180:
                 result["is_new_domain"] = True
     except Exception as e:
